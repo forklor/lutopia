@@ -1,0 +1,44 @@
+body {
+	background: #fff;
+	padding: 1em;
+	font-size: 120%;
+}
+
+a {
+	color: #c00;
+	text-decoration: none;
+}
+
+nav {
+	border-bottom: 1px solid #eee;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 2em;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: bold;
+}
+
+#page {
+	background: #fff;
+	width: 50em;
+	margin: 0 auto;
+	padding: 2em;
+}
+
+.subnav {
+	background: #ddd;
+	padding: 1em;
+}
+
+img {
+	width: 100%;
+	display: block;
+}
