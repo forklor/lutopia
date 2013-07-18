@@ -1,7 +1,19 @@
 body {
 	background: #fff;
+	color: #333;
 	padding: 1em;
-	font-size: 120%;
+	font-family: 'letter-gothic-std', sans-serif;
+	line-height: 1.4;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'league-gothic', sans-serif;
+	text-transform: uppercase;
+	font-weight: normal;
+	border-bottom: 0.2em solid #333;
+	border-top: 0.2em solid #333;
+	line-height: 2;
+	letter-spacing: 0.1em;
 }
 
 a {
@@ -27,10 +39,8 @@ nav li {
 }
 
 #page {
-	background: #fff;
-	width: 50em;
+	max-width: 66em;
 	margin: 0 auto;
-	padding: 2em;
 }
 
 .subnav {
@@ -38,7 +48,38 @@ nav li {
 	padding: 1em;
 }
 
-img {
-	width: 100%;
-	display: block;
+footer {
+}
+
+.shopping {
+	position: fixed;
+	right: 1em;
+	top: 1em;
+}
+
+.shopping-bag {
+	border-radius:50%;
+	background:#666;
+	color:#fff;
+	width: 3em;
+	height: 3em;
+	text-align: center;
+	line-height: 3em;
+}
+
+.shopping-bag:hover {
+	background: #000;
+}
+
+.ui-animated {
+	-moz-transition: all 0.2s;
+	-webkit-transition: all 0.2s;
+	-o-transition: all 0.2s;
+	transition: all 0.2s;
+}
+
+.card {
+	background:#eecfbb;
+	box-shadow: 0px 10px 8px rgba(0,0,0,0.5);
+	padding: 3em;
 }
