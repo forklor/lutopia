@@ -1,18 +1,18 @@
 body {
 	background: #f3f3f3;
 	color: #777;
-	padding: 1em 2em;
+	padding: 1em 3em;
 	font-family: 'freight-sans-pro', sans-serif;
 	line-height: 1.3;
-	font-size:125%;
+	font-size:120%;
 	/*text-align:center;*/
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: 'freight-text-pro', serif;
+	font-family: 'freight-sans-pro', serif;
 	/*text-transform: uppercase;*/
 	font-weight: normal;
-	font-style: italic;
+	/*font-style: italic;*/
 	/*
 	border-bottom: 0.2em solid #333;
 	border-top: 0.2em solid #333;
@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h2 {
 	font-size: 2em;
-	margin: 0;
+	margin: 0.5em 0;
 }
 
 h3 {
@@ -32,12 +32,12 @@ h3 {
 }
 
 a {
-	color: #c00;
+	color: #38CB7D;
 	text-decoration: none;
 }
 
 header {
-	padding: 0.5em 1em;
+	padding: 1em;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	-o-box-sizing: border-box;
@@ -45,6 +45,8 @@ header {
 /*	position:fixed;
 	width: 100%;
 	left:0; top: 0;*/
+	border-bottom: 1px dashed #ccc;
+	margin-bottom: 2em;
 }
 
 nav {
@@ -53,21 +55,32 @@ nav {
 
 .button, button {
 	display: inline-block;
-	padding: 1em 1.5em;
+	padding: 1em 1.5em 0.75em;
 	background: #38CB7D;
 	color: #fff;
 	font-weight: bold;
 	-moz-transition: 0.2s background-color;
 	border:none;
+	border-radius: 3px;
+	border-bottom: 0.25em solid rgba(0, 0, 0, 0.1);
 }
 
 .button:hover, button:hover {
 	background: #f00;
 }
 
+.button-group {
+	text-align: center;
+	margin: 1em 0;
+}
+
 .social img {
-	width: 32px;
-	height: 32px;
+	width: 3.25em;
+	height: 3.25em;
+}
+
+.social ul {
+	margin: 0;
 }
 
 .social li {
@@ -75,9 +88,18 @@ nav {
 }
 
 .copyright {
-	font-size: 0.8em;
+	font-size: 0.7em;
 	color: #999;
-	padding: 3em 0;
+	padding: 1em 0;
+}
+
+.copyright a {
+	color: #777;
+	font-weight: bold;
+}
+
+.copyright a:hover {
+	text-decoration: underline;
 }
 
 table {
@@ -100,14 +122,36 @@ ul {
 
 nav li {
 	display: inline-block;
-	margin-right: 2em;
+	margin-left: 1.5em;
 	text-transform: uppercase;
 	letter-spacing: 0.1em;
 	font-weight: bold;
 }
 
+nav li span {
+	color: #ddd;
+	display: inline-block;
+	vertical-align: middle;
+	height: 2em;
+	line-height: 2em;
+	width: 2em;
+	text-align: center;
+	border: 2px solid #ddd;
+	margin-right: 0.5em;
+	border-radius: 50%;
+	font-weight: bold;
+	font-size: 0.75em;
+	/*background: #ddd;*/
+}
+
+nav li:hover span {
+	color: #aaa;
+	border-color: #aaa;
+}
+
 #shopping-cart, nav ul {
 	display:inline-block;
+	margin: 0;
 }
 
 nav a:hover {
@@ -115,14 +159,46 @@ nav a:hover {
 }
 
 .container {
-	width: 50em;
+	max-width: 1200px;
 	margin: 0 auto;
 }
 
 blockquote {
-	font-size:2em;
 	font-style:italic;
 	font-family: 'freight-text-pro', serif;
+	margin: 1em 0;
+	padding: 0;
+	font-size: 1em;
+}
+
+.message {
+	font-style:italic;
+	font-family: 'freight-text-pro', serif;
+	margin: 1em 0;
+	font-size: 1.2em;
+	color: #38CB7D;
+	text-align: center;
+}
+
+blockquote:before, blockquote:after {
+	content: '"';
+}
+
+cite {
+	font-style: normal;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-size: 0.75em;
+	display: block;
+}
+
+cite a {
+	color: #333;
+	font-weight: bold;
+}
+
+cite:before {
+	content: '— ';
 }
 
 section {
@@ -167,14 +243,18 @@ section {
 }
 
 footer {
-	font-size: 0.8em;
-	padding-top: 1em;
-	border-top: 1px solid #ccc;
+	font-size: 0.9em;
+	padding: 1em 0;
+	border-top: 1px dashed #ccc;
+	margin: 1em 0;
 }
 
 footer .logo {
 	float:left;
-	margin: 1em 1em 1em 0;
+	margin: 1.2em 1em 1em 0;
+	height: 5em;
+	width: 5em;
+	opacity: 0.5;
 }
 
 .shopping {
@@ -203,6 +283,7 @@ footer .logo {
 	top: 1em;
 	left: 1em;
 	color:#fff;
+	border-radius: 3px;
 }
 
 .sold {
@@ -232,5 +313,68 @@ footer .logo {
 	padding: 1em 1em;
 	border:none;
 	margin-right: -4px;
-	border-radius: 10px 0 0 10px;
+	border-radius: 3px 0 0 3px;
+}
+
+/* Draw */
+#draw {
+	position:relative;
+	overflow: hidden;
+}
+
+#artboard {
+	display: block;
+	/*margin: 0 auto;*/
+	background: #fff;
+}
+
+#palette {
+	position: absolute;
+	top: 0;
+	right: 1em;
+	width: 2em;
+	margin: 0;
+}
+
+#palette li {
+	display: block !important;
+}
+
+.testimonial {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-right: 2em;
+	margin-bottom: 2em;
+}
+
+.testimonial img {
+	width: 100px;
+	height: 100px;
+	float: left;
+	border-radius: 50%;
+}
+
+.testimonial blockquote {
+	margin-top: 0;
+	margin-left: 120px;
+	padding: 1em;
+	background: #fff;
+	border-radius: 20px;
+}
+
+.testimonial cite {
+	text-align: right;
+}
+
+.contact ul {
+	font-size: 0.8em;
+	line-height: 1.8;
+}
+
+.price {
+	font-size: 3em;
+	color: #38CB7D;
+	margin: 0;
 }
