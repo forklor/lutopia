@@ -10,12 +10,19 @@
 	<link rel="stylesheet" type="text/css" href="css/lutopia.css">
 
 	<script type='text/javascript' src='components/jquery/jquery.min.js'></script>
-	<script type='text/javascript' src='components/underscore/underscore-min.js'></script>
-	<script type='text/javascript' src='components/json2/json2.js'></script>
-	<script type='text/javascript' src='components/backbone/backbone-min.js'></script>
+	<script type='text/javascript' src='components/handlebars/handlebars.js'></script>
+	<script type='text/javascript' src='components/ember/ember.min.js'></script>
+	<script type='text/javascript' src='js/lib/ember-data-latest.min.js'></script>
+
 	<script type='text/javascript' src='js/stylo.js'></script>
 	<script type='text/javascript' src='js/comper.js'></script>
 	<script type='text/javascript' src='js/lutopia.js'></script>
+	<script type='text/javascript' src='js/models/gallery.js'></script>
+	<script type='text/javascript' src='js/models/gallery-item.js'></script>
+	<script type='text/javascript' src='js/models/drawing-gallery-item.js'></script>
+	<script type='text/javascript' src='js/models/lutopian-gallery-item.js'></script>
+	
+
 
 	<script type="text/javascript" src="//use.typekit.net/ent8pdj.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -25,6 +32,8 @@
 
 </head>
 <body>
+
+<script type='text/x-handlebars' data-template-name='application'>
 
 	<div id='page'>
 
@@ -36,10 +45,10 @@
 
 			<nav>
 				<ul>
-					<li><a href='#/story'>Story</a></li>
-					<li><a href='#/blog'>Blog</a></li>
-					<li><a href='#/gallery'>Explore</a></li>
-					<li><a href='#'>Draw</a></li>
+					<li>{{#linkTo 'story'}}Story{{/linkTo}}</li>
+					<li>{{#linkTo 'gallery'}}Explore{{/linkTo}}</li>
+					<li>{{#linkTo 'draw'}}Draw{{/linkTo}}</li>
+					<li><a href='#/blog'>News</a></li>
 				</ul>
 <!-- 
 				<div id='shopping-cart'>
@@ -54,10 +63,76 @@
 		</header>
 
 		<div id='main' class='container'>
+			{{ outlet }}
+		
+		</div>
 
+		<footer>
+			<div class='pure-g-r container'>
+
+
+				<div class='contact pure-u-1-3'>
+					<img src='svg/logo.svg' class='logo'/>
+					<ul>
+						<li><strong>Lutopia / Veer Klara</strong></li>
+						<li>+40 747 07 80 66</li>
+						<li>Cluj&ndash;Napoca, Romania</li>
+						<li><a href='mailto:hello@lutopia.ro'>hello@lutopia.ro</a></li>
+					</ul>	
+				</div>
+
+				<div class='pure-u-2-3'>
+					<div class='pure-g-r'>
+						<div class='social pure-u-1-3'>
+							<h3>Follow Lutopia</h3>
+							<ul>
+								<li>
+									<a href='http://facebook.com/lutopia'>
+										<img src="svg/social/facebook.svg"/>
+										<!-- Facebook -->
+									</a>
+								</li>
+								<li>
+									<a href='http://pinterest.com/lutopia'>
+										<img src="svg/social/pinterest.svg"/>
+										<!-- Pinterest -->
+									</a>
+								</li>
+								<li>
+									<a href='http://flickr.com/lutopia'>
+										<img src="svg/social/flickr.svg"/>
+										<!-- Flickr -->
+									</a>
+								</li>
+							</ul>
+						</div>
+						<div class='newsletter pure-u-2-3'>
+							<h3>Mailman</h3>
+							<!-- <p>Get the Lutopia newspaper with the latest news delivered to your inbox.</p> -->
+							<form>
+								<input type='email' placeholder='Enter your email address'/>
+								<button type='submit'>Get the newspaper</button>
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<p class='copyright container'>
+				Copyright &copy 2013 Veer Klara
+				&mdash; Lutopia is made <a href='http://cluj.co'> with <span style='color:#c00'>&hearts;</span> in Cluj</a>.
+				Typefaces Freight Text &amp; Sans provided by <a href='http://typekit.com'>Typekit</a>,
+				website by <a href='http://forklor.ro'>Forklor</a>.
+			</p>
+		</footer>
+	</div>
+</script>
+
+<script type='text/x-handlebars' data-template-name='draw'>
 
 			<section id='draw-section'>
-				<div class='message'>Draw your own Lutopian!</div>
+				<div class='message'>Draw your own Lutopian! &mdash; or see <a href='#'>what others have drawn</a></div>
 				<div id='draw'>
 					<canvas id='artboard'></canvas>
 					<ul id='palette'></ul>
@@ -68,6 +143,9 @@
 					<a id='order-drawing' href='#' class='button'>Order Lutopian</a>
 				</div>
 			</section>
+</script>
+
+<script type='text/x-handlebars' data-template-name='draw-gallery'>
 
 			<section id='drawing-gallery-section'>
 				<h2>Drawing gallery</h2>
@@ -156,6 +234,9 @@
 					</div>
 			</section>
 
+</script>
+
+<script type='text/x-handlebars' data-template-name='cart'>
 
 			<section id='shopping-section'>
 				<h2>Your shopping cart</h2>
@@ -172,6 +253,10 @@
 				<a class='button' href='#'>Proceed to checkout</a> We accept PayPal and credit cards.
 
 			</section>
+
+</script>
+
+<script type='text/x-handlebars' data-template-name='gallery'>
 
 			<section id='gallery-section'>
 				<h2>Gallery</h2>
@@ -193,73 +278,15 @@
 								<p>These are all made from drawings by nephew Tom.</p>
 							</div>
 							<div class='pure-g-r'>
+								{{#each}}
 								<div class='pure-u-1-3'>
 									<div class='gallery-item'>
 										<!-- <span class='gallery-item-status new'>New!</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
+										<img src="{{unbound image}}">
+										<a class='gallery-item-title'>{{ name }}</a> &mdash; born Nov. 2012
 									</div>
 								</div>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status sold'>Sold</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status sold'>Sold</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-							</div>
-							<div class='pure-g-r'>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status new'>New!</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status sold'>Sold</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status sold'>Sold</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-							</div>
-							<div class='pure-g-r'>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status new'>New!</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status sold'>Sold</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status sold'>Sold</span> -->
-										<img src='img/lutopians/blomu.jpg'/>
-										<a class='gallery-item-title'>Blomu</a> &mdash; born Nov. 2012
-									</div>
-								</div>
+								{{/each}}
 							</div>
 						</div><!--/gallery-->
 						<div class='profile'>
@@ -282,7 +309,9 @@
 						</div>
 					</div>
 			</section>
+</script>
 
+<script type='text/x-handlebars' data-template-name='story'>
 
 			<section id='story-section'>
 				<h2>The Story, Short</h2>
@@ -347,69 +376,6 @@
 				</div>
 
 			</section>
-
-		</div>
-
-		<footer>
-			<div class='pure-g-r container'>
-
-
-				<div class='contact pure-u-1-3'>
-					<img src='svg/logo.svg' class='logo'/>
-					<ul>
-						<li><strong>Lutopia / Veer Klara</strong></li>
-						<li>+40 747 07 80 66</li>
-						<li>Cluj&ndash;Napoca, Romania</li>
-						<li><a href='mailto:hello@lutopia.ro'>hello@lutopia.ro</a></li>
-					</ul>	
-				</div>
-
-				<div class='pure-u-2-3'>
-					<div class='pure-g-r'>
-						<div class='social pure-u-1-3'>
-							<h3>Follow Lutopia</h3>
-							<ul>
-								<li>
-									<a href='http://facebook.com/lutopia'>
-										<img src="svg/social/facebook.svg"/>
-										<!-- Facebook -->
-									</a>
-								</li>
-								<li>
-									<a href='http://pinterest.com/lutopia'>
-										<img src="svg/social/pinterest.svg"/>
-										<!-- Pinterest -->
-									</a>
-								</li>
-								<li>
-									<a href='http://flickr.com/lutopia'>
-										<img src="svg/social/flickr.svg"/>
-										<!-- Flickr -->
-									</a>
-								</li>
-							</ul>
-						</div>
-						<div class='newsletter pure-u-2-3'>
-							<h3>Mailman</h3>
-							<!-- <p>Get the Lutopia newspaper with the latest news delivered to your inbox.</p> -->
-							<form>
-								<input type='email' placeholder='Enter your email address'/>
-								<button type='submit'>Get the newspaper</button>
-							</form>
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-			<p class='copyright container'>
-				Copyright &copy 2013 LUtOPIA, Veer Klara.
-				Typeface Futura provided by <a href='http://typekit.com'>Typekit</a>.
-				Website built by <a href='http://forklor.ro'>Forklor</a>.
-			</p>
-
-		</footer>
-
-	</div>
+</script>
 </body>
 </html>

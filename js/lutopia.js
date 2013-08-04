@@ -1,16 +1,32 @@
-var Lu = {};
+var Lu = Ember.Application.create();
 
-$(function() {
+Lu.Store = DS.Store.extend({
+	revision: '13',
+	adapter: DS.FixtureAdapter.create()
+});
 
-	brush.init({
-		canvas: $("#artboard")[0],
-		palette: $("#palette")[0],
-		width: 1200,
-		height: 600
-	});
+Lu.Router.map(function() {
+	this.route('story');
+	this.route('gallery');
+	this.route('draw');
+});
 
-	$("#draw-section").on('click', '#download-drawing', function() {
-		brush.download();
-		return false;
-	});
-})
+Lu.GalleryRoute = Ember.Route.extend({
+	model: function() {
+		return Lu.LutopianGalleryItem.find();
+	},
+	setupController: function(controller, model) {
+		controller.set('model', model);
+	}
+});
+
+Lu.DrawView = Ember.View.extend({
+	didInsertElement: function(){
+		brush.init({
+			canvas: $("#artboard")[0],
+			palette: $("#palette")[0],
+			width: 800,
+			height: 600
+		});
+	}
+});

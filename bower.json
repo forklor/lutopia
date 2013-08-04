@@ -7,6 +7,10 @@
     "pure-built": "~0.2.0",
     "backbone": "~1.0.0",
     "underscore": "~1.5.1",
-    "json2": "latest"
+    "json2": "*",
+    "handlebars": "~1.0.0",
+    "ember": "~1.0.0-rc.6",
+    "ember-data": "*",
+    "ember-data-shim": "~0.0.13"
   }
 }
