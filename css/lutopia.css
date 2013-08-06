@@ -149,7 +149,7 @@ nav li {
 	margin: 0;
 }
 
-nav a:hover {
+nav a:hover, nav a.active {
 	color: #777;
 }
 
@@ -203,10 +203,18 @@ cite:before {
 }
 
 section {
-	/*display:none;*/
+	min-height: 20em;
 }
 
-aside {}
+aside {
+	font-size: 0.8em;
+	color: #777;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-right: 2em;
+}
 
 .counter {
 	color: #aaa;

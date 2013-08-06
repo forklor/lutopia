@@ -33,6 +33,16 @@
 </head>
 <body>
 
+<script type="text/x-handlebars" data-template-name='index'>
+	
+	<section id='home-section'>
+
+		<h1>Welcome to Lutopia!</h1>
+
+	</section>
+
+</script>
+
 <script type='text/x-handlebars' data-template-name='application'>
 
 	<div id='page'>
@@ -46,9 +56,9 @@
 			<nav>
 				<ul>
 					<li>{{#linkTo 'story'}}Story{{/linkTo}}</li>
-					<li>{{#linkTo 'gallery'}}Explore{{/linkTo}}</li>
+					<li>{{#linkTo 'galleries'}}Explore{{/linkTo}}</li>
 					<li>{{#linkTo 'draw'}}Draw{{/linkTo}}</li>
-					<li><a href='#/blog'>News</a></li>
+					<li>{{#linkTo 'blog'}}News{{/linkTo}}</li>
 				</ul>
 <!-- 
 				<div id='shopping-cart'>
@@ -130,9 +140,20 @@
 </script>
 
 <script type='text/x-handlebars' data-template-name='draw'>
+	{{ outlet }}
+</script>
+
+
+<script type='text/x-handlebars' data-template-name='blog'>
+	<section id='blog-section'>
+		<h2>Lutopia Blog</h2>
+	</section>
+</script>
+
+<script type='text/x-handlebars' data-template-name='draw/index'>
 
 			<section id='draw-section'>
-				<div class='message'>Draw your own Lutopian! &mdash; or see <a href='#'>what others have drawn</a></div>
+				<div class='message'>Draw your own Lutopian! &mdash; or see {{#linkTo 'draw.gallery'}}what others have drawn{{/linkTo}}</div>
 				<div id='draw'>
 					<canvas id='artboard'></canvas>
 					<ul id='palette'></ul>
@@ -145,13 +166,13 @@
 			</section>
 </script>
 
-<script type='text/x-handlebars' data-template-name='draw-gallery'>
+<script type='text/x-handlebars' data-template-name='draw/gallery'>
 
 			<section id='drawing-gallery-section'>
 				<h2>Drawing gallery</h2>
 				<div class='pure-g-r'>
 					<div class='pure-u-1-4'>
-						<a class='button' href='#'>Draw your own!</a>
+						{{#linkTo 'draw.index' class='button'}}Draw your own!{{/linkTo}}
 					</div>
 					<div class='pure-u-3-4'>
 						<div class='gallery'>
@@ -256,59 +277,69 @@
 
 </script>
 
-<script type='text/x-handlebars' data-template-name='gallery'>
+<script type='text/x-handlebars' data-template-name='galleries'>
 
 			<section id='gallery-section'>
-				<h2>Gallery</h2>
+				<h2>Explore</h2>
 				<div class='pure-g-r'>
 					<div class='pure-u-1-4 gallery-menu'>
 						<!-- <h3>Series</h3> -->
 						<ul>
-							<li class='selected'><span class='counter'>A</span> <a href='#'>Tom's World</a></li>
-							<li><a href='#'><span class='counter'>B</span> Unique designs</a></li>
-							<li><a href='#'><span class='counter'>C</span> Limited series</a></li>
-							<li><a href='#'><span class='counter'>D</span> Comissions</a></li>
-							<li><a href='#'><span class='counter'>E</span> Design gifts</a></li>
+							{{#each gallery in controller}}
+							<li><span class='counter'>{{gallery.counter}}</span> {{#linkTo 'gallery.index' gallery}}{{gallery.title}}{{/linkTo}}</li>
+							{{/each}}
 						</ul>
 					</div>
 					<div class='pure-u-3-4'>
-						<div class='gallery'>
-							<div class='gallery-description'>
-								<h3>Tom's World</h3>	
-								<p>These are all made from drawings by nephew Tom.</p>
-							</div>
-							<div class='pure-g-r'>
-								{{#each}}
-								<div class='pure-u-1-3'>
-									<div class='gallery-item'>
-										<!-- <span class='gallery-item-status new'>New!</span> -->
-										<img src="{{unbound image}}">
-										<a class='gallery-item-title'>{{ name }}</a> &mdash; born Nov. 2012
-									</div>
-								</div>
-								{{/each}}
-							</div>
-						</div><!--/gallery-->
-						<div class='profile'>
-							<h2>Blomu</h2>
-							<div class='pure-g'>
-								<div class='pure-u-2-3'>
-									<img src='img/lutopians/blomu.jpg' width='90%'/>
-								</div>
-								<div class='pure-u-1-3'>
-									<div class='profile-card'>
-										<blockquote>
-											There once lived a mysterious bird. 
-										</blockquote>
-										<p>Blomu was born on September 13, 2013.</p>
-										<p class='price'>$99</p>
-									</div>
-									<a class='button' href='#'>Adopt this lutopian!</a>
-								</div>
-							</div>
-						</div>
+						{{ outlet }}
 					</div>
 			</section>
+</script>
+
+<script type='text/x-handlebars' data-template-name='galleries/gallery'>
+	pula me
+	{{ outlet }}
+</script>
+
+<script type='text/x-handlebars' data-template-name='galleries/gallery/detail'>
+	<div class='profile'>
+		<h2>Blomu</h2>
+		<div class='pure-g'>
+			<div class='pure-u-2-3'>
+				<img src='img/lutopians/blomu.jpg' width='90%'/>
+			</div>
+			<div class='pure-u-1-3'>
+				<div class='profile-card'>
+					<blockquote>
+						There once lived a mysterious bird. 
+					</blockquote>
+					<p>Blomu was born on September 13, 2013.</p>
+					<p class='price'>$99</p>
+				</div>
+				<a class='button' href='#'>Adopt this lutopian!</a>
+			</div>
+		</div>
+	</div>
+</script>
+
+<script type='text/x-handlebars' data-template-name='galleries/gallery/index'>
+<div class='gallery'>
+		<div class='gallery-description'>
+			<h3>Toms World</h3>	
+			<p>These are all made from drawings by nephew Tom.</p>
+		</div>
+		<div class='pure-g-r'>
+			{{#each}}
+			<div class='pure-u-1-3'>
+				<div class='gallery-item'>
+					<!-- <span class='gallery-item-status new'>New!</span> -->
+					<img src="{{unbound image}}">
+					<a class='gallery-item-title'>{{ name }}</a> &mdash; born Nov. 2012
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</div><!--/gallery-->
 </script>
 
 <script type='text/x-handlebars' data-template-name='story'>
@@ -340,8 +371,7 @@
 
 						veer klara
 
-						<h3>Update 2011</h3>
-						<p>As far as Tom is concerned, he still draws inspiring creatures and enjoys seeing them come to life. But to our great surprise, there are so many other creative persons out there! Many nice drawings were sent to us with requests to create Lutopians out of them. One young lady had this cool idea to send in her boyfriend's drawing (he drew it 23 years ago, as a child) and she kept it a secret till Christmas - surely you can imagine how thrilled he was to receive this gift :)</p>
+						<p><strong>Update 2011:</strong> As far as Tom is concerned, he still draws inspiring creatures and enjoys seeing them come to life. But to our great surprise, there are so many other creative persons out there! Many nice drawings were sent to us with requests to create Lutopians out of them. One young lady had this cool idea to send in her boyfriend's drawing (he drew it 23 years ago, as a child) and she kept it a secret till Christmas - surely you can imagine how thrilled he was to receive this gift :)</p>
 					</div>
 				</div>
 

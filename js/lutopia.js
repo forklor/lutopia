@@ -1,4 +1,10 @@
-var Lu = Ember.Application.create();
+var Lu = Ember.Application.create({
+	applicationController: Ember.Controller.create({
+		currentPathDidChange: function() {
+			console.info(this.get('currentPath'));
+		}
+	})
+});
 
 Lu.Store = DS.Store.extend({
 	revision: '13',
@@ -7,20 +13,59 @@ Lu.Store = DS.Store.extend({
 
 Lu.Router.map(function() {
 	this.route('story');
-	this.route('gallery');
-	this.route('draw');
+	this.resource('galleries', { path: 'gallery' }, function() {
+		this.route('index', { path: '/' });
+		this.resource('gallery', { path: '/:slug'}, function() {
+			this.route('index', { path: '/' });
+		});
+		// this.resource('gallery', { path: '/gallery/:id' }, function() {
+		// 	this.route('index', { path: '/' });
+		// 	this.resource('galleryItem', { path: '/:id' });
+		// });
+	});
+	this.resource('draw', function() {
+		this.route('index')
+		this.route('gallery');
+	});
+
+	this.route('blog');
 });
 
-Lu.GalleryRoute = Ember.Route.extend({
+Lu.GalleriesRoute = Ember.Route.extend({
 	model: function() {
-		return Lu.LutopianGalleryItem.find();
-	},
-	setupController: function(controller, model) {
-		controller.set('model', model);
+		return Lu.Gallery.find();
 	}
 });
 
-Lu.DrawView = Ember.View.extend({
+Lu.GalleriesGalleryRoute = Ember.Route.extend({
+	model: function(params) {
+		console.log(params);
+		return Lu.Gallery.find(params.slug);
+	},
+	serialize: function(model) {
+		return {
+			slug: model.get('slug')
+		};
+	}
+});
+
+Lu.GalleriesGalleryIndexRoute = Ember.Route.extend({
+	model: function (params) {
+		console.log(params);
+		return Lu.Gallery.find(params.slug);
+	},
+	serialize: function(model) {
+		return { slug: model.get('slug') };
+	}
+});
+
+Lu.GalleriesGalleryDetailRoute = Ember.Route.extend({
+	model: function(params) {
+		return Lu.GalleryItem.find(params.id);
+	}
+});
+
+Lu.DrawIndexView = Ember.View.extend({
 	didInsertElement: function(){
 		brush.init({
 			canvas: $("#artboard")[0],
